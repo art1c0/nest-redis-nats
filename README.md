@@ -20,3 +20,16 @@ Nest Redis NATS Microservice
 	amount: Number
 }
 ```
+
+
+RUN the app in development mode
+
+```
+docker-compose up
+```
+
+After adding new npm modules please run this to update the anonymous volume
+
+```
+docker-compose up --build -V
+```
