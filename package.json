@@ -1,0 +1,19 @@
+{
+  "name": "nest-redis-nats",
+  "version": "1.0.0",
+  "description": "Nest Redis NATS Microservice",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/articobandurini/nest-redis-nats.git"
+  },
+  "author": "artico",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/articobandurini/nest-redis-nats/issues"
+  },
+  "homepage": "https://github.com/articobandurini/nest-redis-nats#readme"
+}
