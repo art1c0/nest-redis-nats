@@ -3,6 +3,8 @@ version: '3.7'
 services:
   main:
     container_name: main
+    environment:
+      - NATS_URL=nats://nats:4222
     build:
       context: .
       target: development
