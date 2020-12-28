@@ -3,7 +3,7 @@ export enum EventType {
   TypeB,
 }
 
-export class EventDTO {
+export interface EventDTO {
   userId: number;
   eventType: EventType;
   createdAt: Date;
