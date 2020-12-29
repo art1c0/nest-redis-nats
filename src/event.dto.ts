@@ -3,12 +3,10 @@ export enum EventType {
   TypeB,
 }
 
-export interface EventDTO {
+export interface EventDto {
   userId: number;
   eventType: EventType;
   createdAt: Date;
   currency: string;
   amount: number;
 }
-
-export const EventMessagePattern = 'event';

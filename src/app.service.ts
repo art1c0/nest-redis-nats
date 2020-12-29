@@ -3,45 +3,41 @@ import { ClientProxy } from '@nestjs/microservices';
 import { RedisService } from 'nestjs-redis';
 import { Observable } from 'rxjs';
 import { promisify } from 'util';
-import { EventDTO, EventMessagePattern } from './event.dto';
+import { EventDto } from './event.dto';
 
 @Injectable()
 export class AppService {
   constructor(
-    @Inject('NATS') private readonly client: ClientProxy,
+    @Inject('NATS') private readonly nats: ClientProxy,
     private readonly redisService: RedisService,
   ) {}
-
-  getHello(): string {
-    return 'Hello World!';
-  }
 
   public async getEvents(
     userId: number,
     start: number,
     stop: number,
-  ): Promise<EventDTO[]> {
-    const client = await this.redisService.getClient();
-    const get = promisify(client.lrange).bind(client);
-    const result = await get(`user:${userId}`, start, stop);
+  ): Promise<EventDto[]> {
+    const redis = await this.redisService.getClient();
+    const lrange = promisify(redis.lrange).bind(redis);
+    const result = await lrange(`user:${userId}`, start, stop);
     return result.map((item) => AppService.deserialize(item));
   }
 
-  public async receiveEvent(event: EventDTO): Promise<number> {
-    const client = await this.redisService.getClient();
-    const set = promisify(client.lpush).bind(client);
-    return set(`user:${event.userId}`, AppService.serialize(event));
+  public async receiveEvent(event: EventDto): Promise<number> {
+    const redis = await this.redisService.getClient();
+    const lpush = promisify(redis.lpush).bind(redis);
+    return lpush(`user:${event.userId}`, AppService.serialize(event));
   }
 
-  public sendEvent(event: EventDTO): Observable<any> {
-    return this.client.emit(EventMessagePattern, event);
+  public sendEvent(pattern: any, event: EventDto): Observable<string> {
+    return this.nats.emit<string, EventDto>(pattern, event);
   }
 
-  static serialize(event: EventDTO): string {
+  static serialize(event: EventDto): string {
     return JSON.stringify(event);
   }
 
-  static deserialize(input: string): EventDTO {
-    return <EventDTO>JSON.parse(input);
+  static deserialize(input: string): EventDto {
+    return <EventDto>JSON.parse(input);
   }
 }

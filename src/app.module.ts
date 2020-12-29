@@ -8,10 +8,12 @@ import { redisConfig } from './redis.config';
 
 @Module({
   imports: [
-    ClientsModule.register([{
+    ClientsModule.register([
+      {
         name: 'NATS',
         ...natsConfig,
-    }]),
+      },
+    ]),
     RedisModule.register(redisConfig),
   ],
   controllers: [AppController],
