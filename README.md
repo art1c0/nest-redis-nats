@@ -33,3 +33,17 @@ After adding new npm modules please run this to update the anonymous volume
 ```
 docker-compose up --build -V
 ```
+
+Send a mock event
+
+```
+GET http://localhost:3000/send/<userId>[?amount=<amount>]
+```
+
+Read events for a user
+
+```
+GET http://localhost:3000/events/<userId>[?skip=<skip>]
+```
+
+Service is listening for messages from NATS with plain string pattern "event" - this parameter `eventPattern` can be changed in app.controller.
