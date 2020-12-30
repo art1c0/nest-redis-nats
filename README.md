@@ -22,7 +22,7 @@ Nest Redis NATS Microservice
 ```
 
 
-####RUN the app in development mode
+#### RUN the app in development mode
 
 ```
 docker-compose up
@@ -48,7 +48,7 @@ GET http://localhost:3000/events/<userId>[?skip=<skip>]
 
 Service is listening for messages from NATS with plain string pattern "event" - this parameter `eventPattern` can be changed in app.controller.
 
-####RUN the app in production mode
+#### RUN the app in production mode
 
 Run two separate docker-compose files (NATS & Redis and the Main):
 
